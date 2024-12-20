@@ -1854,17 +1854,17 @@
   // AMD.
   if (typeof define == 'function' && define.amd) {
     define(function () {
-      return result;
+      return OmegaNum;
     });
   // Node and other environments that support module.exports.
   } else if (typeof module != 'undefined' && module.exports) {
-    module.exports = result;
+    module.exports = OmegaNum;
     // Browser.
   } else {
     if (!globalScope) {
       globalScope = typeof self != 'undefined' && self && self.self == self
         ? self : Function('return this')();
     }
-    globalScope.OmegaNum = result;
+    globalScope.OmegaNum = OmegaNum;
   }
 })(this);
