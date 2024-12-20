@@ -4,7 +4,12 @@
   "use strict";
 
 
+  /**
+   * @typedef {((arg1, arg2) => typeof P) & typeof R} OmegaNumType
+   */
+
   // --  EDITABLE DEFAULTS  -- //
+  /** @type {OmegaNumType} */
   var OmegaNum = {
 
     // The maximum number of arrows accepted in operation.
@@ -73,6 +78,7 @@
 
   // OmegaNum prototype methods
 
+  /** @returns {typeof P} */
   P.absoluteValue=P.abs=function(){
     var x=this.clone();
     x.sign=1;
@@ -81,6 +87,7 @@
   Q.absoluteValue=Q.abs=function(x){
     return new OmegaNum(x).abs();
   };
+  /** @returns {typeof P} */
   P.negate=P.neg=function (){
     var x=this.clone();
     x.sign=x.sign*-1;
@@ -117,48 +124,56 @@
   Q.compare=Q.cmp=function (x,y){
     return new OmegaNum(x).cmp(y);
   };
+  /** @returns {boolean} */
   P.greaterThan=P.gt=function (other){
     return this.cmp(other)>0;
   };
   Q.greaterThan=Q.gt=function (x,y){
     return new OmegaNum(x).gt(y);
   };
+  /** @returns {boolean} */
   P.greaterThanOrEqualTo=P.gte=function (other){
     return this.cmp(other)>=0;
   };
   Q.greaterThanOrEqualTo=Q.gte=function (x,y){
     return new OmegaNum(x).gte(y);
   };
+  /** @returns {boolean} */
   P.lessThan=P.lt=function (other){
     return this.cmp(other)<0;
   };
   Q.lessThan=Q.lt=function (x,y){
     return new OmegaNum(x).lt(y);
   };
+  /** @returns {boolean} */
   P.lessThanOrEqualTo=P.lte=function (other){
     return this.cmp(other)<=0;
   };
   Q.lessThanOrEqualTo=Q.lte=function (x,y){
     return new OmegaNum(x).lte(y);
   };
+  /** @returns {boolean} */
   P.equalsTo=P.equal=P.eq=function (other){
     return this.cmp(other)===0;
   };
   Q.equalsTo=Q.equal=Q.eq=function (x,y){
     return new OmegaNum(x).eq(y);
   };
+  /** @returns {boolean} */
   P.notEqualsTo=P.notEqual=P.neq=function (other){
     return this.cmp(other)!==0;
   };
   Q.notEqualsTo=Q.notEqual=Q.neq=function (x,y){
     return new OmegaNum(x).neq(y);
   };
+  /** @returns {typeof P} */
   P.minimum=P.min=function (other){
     return this.lt(other)?this.clone():new OmegaNum(other);
   };
   Q.minimum=Q.min=function (x,y){
     return new OmegaNum(x).min(y);
   };
+  /** @returns {typeof P} */
   P.maximum=P.max=function (other){
     return this.gt(other)?this.clone():new OmegaNum(other);
   };
@@ -271,6 +286,7 @@
   Q.isInfinite=function (x){
     return new OmegaNum(x).isInfinite();
   };
+  /** @returns {typeof boolean} */
   P.isInteger=P.isint=function (){
     if (this.sign==-1) return this.abs().isint();
     if (this.gt(OmegaNum.MAX_SAFE_INTEGER)) return true;
@@ -279,6 +295,7 @@
   Q.isInteger=Q.isint=function (x){
     return new OmegaNum(x).isint();
   };
+  /** @returns {typeof P} */
   P.floor=function (){
     if (this.isInteger()) return this.clone();
     return new OmegaNum(Math.floor(this.toNumber()));
@@ -286,6 +303,7 @@
   Q.floor=function (x){
     return new OmegaNum(x).floor();
   };
+  /** @returns {typeof P} */
   P.ceiling=P.ceil=function (){
     if (this.isInteger()) return this.clone();
     return new OmegaNum(Math.ceil(this.toNumber()));
@@ -301,6 +319,7 @@
     return new OmegaNum(x).round();
   };
   var debugMessageSent=false;
+  /** @returns {typeof P} */
   P.plus=P.add=function (other){
     var x=this.clone();
     other=new OmegaNum(other);
@@ -332,6 +351,7 @@
   Q.plus=Q.add=function (x,y){
     return new OmegaNum(x).add(y);
   };
+  /** @returns {typeof P} */
   P.minus=P.sub=function (other){
     var x=this.clone();
     other=new OmegaNum(other);
@@ -363,6 +383,7 @@
   Q.minus=Q.sub=function (x,y){
     return new OmegaNum(x).sub(y);
   };
+  /** @returns {typeof P} */
   P.times=P.mul=function (other){
     var x=this.clone();
     other=new OmegaNum(other);
@@ -382,6 +403,7 @@
   Q.times=Q.mul=function (x,y){
     return new OmegaNum(x).mul(y);
   };
+  /** @returns {typeof P} */
   P.divide=P.div=function (other){
     var x=this.clone();
     other=new OmegaNum(other);
@@ -405,6 +427,7 @@
   Q.divide=Q.div=function (x,y){
     return new OmegaNum(x).div(y);
   };
+  /** @returns {typeof P} */
   P.reciprocate=P.rec=function (){
     if (OmegaNum.debug>=OmegaNum.NORMAL) console.log(this+"^-1");
     if (this.isNaN()||this.eq(OmegaNum.ZERO)) return OmegaNum.NaN.clone();
@@ -414,6 +437,7 @@
   Q.reciprocate=Q.rec=function (x){
     return new OmegaNum(x).rec();
   };
+  /** @returns {typeof P} */
   P.modular=P.mod=function (other){
     other=new OmegaNum(other);
     if (other.eq(OmegaNum.ZERO)) return OmegaNum.ZERO.clone();
@@ -461,6 +485,7 @@
     return Math.exp(l)/scal1;
   };
   //from HyperCalc source code
+  /** @returns {typeof P} */
   P.gamma=function (){
     var x=this.clone();
     if (x.gt(OmegaNum.TETRATED_MAX_SAFE_INTEGER)) return x;
@@ -502,6 +527,7 @@
   };
   //end break_eternity.js excerpt
   Q.factorials=[1,1,2,6,24,120,720,5040,40320,362880,3628800,39916800,479001600,6227020800,87178291200,1307674368000,20922789888000,355687428096000,6402373705728000,121645100408832000,2432902008176640000,51090942171709440000,1.1240007277776076800e+21,2.5852016738884978213e+22,6.2044840173323941000e+23,1.5511210043330986055e+25,4.0329146112660565032e+26,1.0888869450418351940e+28,3.0488834461171387192e+29,8.8417619937397018986e+30,2.6525285981219106822e+32,8.2228386541779224302e+33,2.6313083693369351777e+35,8.6833176188118859387e+36,2.9523279903960415733e+38,1.0333147966386145431e+40,3.7199332678990125486e+41,1.3763753091226345579e+43,5.2302261746660111714e+44,2.0397882081197444123e+46,8.1591528324789768380e+47,3.3452526613163807956e+49,1.4050061177528799549e+51,6.0415263063373834074e+52,2.6582715747884488694e+54,1.1962222086548018857e+56,5.5026221598120891536e+57,2.5862324151116817767e+59,1.2413915592536072528e+61,6.0828186403426752249e+62,3.0414093201713375576e+64,1.5511187532873821895e+66,8.0658175170943876846e+67,4.2748832840600254848e+69,2.3084369733924137924e+71,1.2696403353658276447e+73,7.1099858780486348103e+74,4.0526919504877214100e+76,2.3505613312828784949e+78,1.3868311854568983861e+80,8.3209871127413898951e+81,5.0758021387722483583e+83,3.1469973260387939390e+85,1.9826083154044400850e+87,1.2688693218588416544e+89,8.2476505920824715167e+90,5.4434493907744306945e+92,3.6471110918188683221e+94,2.4800355424368305480e+96,1.7112245242814129738e+98,1.1978571669969892213e+100,8.5047858856786230047e+101,6.1234458376886084639e+103,4.4701154615126843855e+105,3.3078854415193862416e+107,2.4809140811395399745e+109,1.8854947016660503806e+111,1.4518309202828587210e+113,1.1324281178206296794e+115,8.9461821307829757136e+116,7.1569457046263805709e+118,5.7971260207473678414e+120,4.7536433370128420198e+122,3.9455239697206587884e+124,3.3142401345653531943e+126,2.8171041143805501310e+128,2.4227095383672734128e+130,2.1077572983795278544e+132,1.8548264225739843605e+134,1.6507955160908460244e+136,1.4857159644817615149e+138,1.3520015276784029158e+140,1.2438414054641308179e+142,1.1567725070816415659e+144,1.0873661566567430754e+146,1.0329978488239059305e+148,9.9167793487094964784e+149,9.6192759682482120384e+151,9.4268904488832479837e+153,9.3326215443944153252e+155,9.3326215443944150966e+157,9.4259477598383598816e+159,9.6144667150351270793e+161,9.9029007164861804721e+163,1.0299016745145628100e+166,1.0813967582402909767e+168,1.1462805637347083683e+170,1.2265202031961380050e+172,1.3246418194518290179e+174,1.4438595832024936625e+176,1.5882455415227430287e+178,1.7629525510902445874e+180,1.9745068572210740115e+182,2.2311927486598137657e+184,2.5435597334721876552e+186,2.9250936934930159967e+188,3.3931086844518980862e+190,3.9699371608087210616e+192,4.6845258497542909237e+194,5.5745857612076058231e+196,6.6895029134491271205e+198,8.0942985252734440920e+200,9.8750442008336010580e+202,1.2146304367025329301e+205,1.5061417415111409314e+207,1.8826771768889261129e+209,2.3721732428800468512e+211,3.0126600184576594309e+213,3.8562048236258040716e+215,4.9745042224772874590e+217,6.4668554892204741474e+219,8.4715806908788206314e+221,1.1182486511960043298e+224,1.4872707060906857134e+226,1.9929427461615187928e+228,2.6904727073180504073e+230,3.6590428819525488642e+232,5.0128887482749919605e+234,6.9177864726194885808e+236,9.6157231969410893532e+238,1.3462012475717525742e+241,1.8981437590761708898e+243,2.6953641378881628530e+245,3.8543707171800730787e+247,5.5502938327393044385e+249,8.0479260574719917061e+251,1.1749972043909107097e+254,1.7272458904546389230e+256,2.5563239178728653927e+258,3.8089226376305697893e+260,5.7133839564458546840e+262,8.6272097742332399855e+264,1.3113358856834524492e+267,2.0063439050956822953e+269,3.0897696138473507759e+271,4.7891429014633940780e+273,7.4710629262828942235e+275,1.1729568794264144743e+278,1.8532718694937349890e+280,2.9467022724950384028e+282,4.7147236359920616095e+284,7.5907050539472189932e+286,1.2296942187394494177e+289,2.0044015765453026266e+291,3.2872185855342959088e+293,5.4239106661315886750e+295,9.0036917057784375454e+297,1.5036165148649991456e+300,2.5260757449731984219e+302,4.2690680090047051083e+304,7.2574156153079990350e+306];
+  /** @returns {typeof P} */
   P.factorial=P.fact=function (){
     var x=this.clone();
     var f=OmegaNum.factorials;
@@ -519,6 +545,7 @@
   Q.factorial=Q.fact=function (x){
     return new OmegaNum(x).fact();
   };
+  /** @returns {typeof P} */
   P.toPower=P.pow=function (other){
     other=new OmegaNum(other);
     if (OmegaNum.debug>=OmegaNum.NORMAL) console.log(this+"^"+other);
@@ -550,24 +577,28 @@
   Q.toPower=Q.pow=function (x,y){
     return new OmegaNum(x).pow(y);
   };
+  /** @returns {typeof P} */
   P.exponential=P.exp=function (){
     return OmegaNum.pow(Math.E,this);
   };
   Q.exponential=Q.exp=function (x){
     return OmegaNum.pow(Math.E,x);
   };
+  /** @returns {typeof P} */
   P.squareRoot=P.sqrt=function (){
     return this.root(2);
   };
   Q.squareRoot=Q.sqrt=function (x){
     return new OmegaNum(x).root(2);
   };
+  /** @returns {typeof P} */
   P.cubeRoot=P.cbrt=function (){
     return this.root(3);
   };
   Q.cubeRoot=Q.cbrt=function (x){
     return new OmegaNum(x).root(3);
   };
+  /** @returns {typeof P} */
   P.root=function (other){
     other=new OmegaNum(other);
     if (OmegaNum.debug>=OmegaNum.NORMAL) console.log(this+"root"+other);
@@ -584,6 +615,7 @@
   Q.root=function (x,y){
     return new OmegaNum(x).root(y);
   };
+  /** @returns {typeof P} */
   P.generalLogarithm=P.log10=function (){
     var x=this.clone();
     if (OmegaNum.debug>=OmegaNum.NORMAL) console.log("log"+this);
@@ -598,6 +630,7 @@
   Q.generalLogarithm=Q.log10=function (x){
     return new OmegaNum(x).log10();
   };
+  /** @returns {typeof P} */
   P.logarithm=P.logBase=function (base){
     if (base===undefined) base=Math.E;
     return this.log10().div(OmegaNum.log10(base));
@@ -605,6 +638,7 @@
   Q.logarithm=Q.logBase=function (x,base){
     return new OmegaNum(x).logBase(base);
   };
+  /** @returns {typeof P} */
   P.naturalLogarithm=P.log=P.ln=function (){
     return this.logBase(Math.E);
   };
@@ -669,6 +703,7 @@
   //The Lambert W function, also called the omega function or product logarithm, is the solution W(x) === x*e^x.
   //https://en.wikipedia.org/wiki/Lambert_W_function
   //Some special values, for testing: https://en.wikipedia.org/wiki/Lambert_W_function#Special_values
+  /** @returns {typeof P} */
   P.lambertw=function (principal){
     if (principal===undefined) principal=true;
     var x=this.clone();
@@ -694,6 +729,7 @@
   };
   //end break_eternity.js excerpt
   //Uses linear approximations for real height
+  /** @returns {typeof P} */
   P.tetrate=P.tetr=function (other,payload){
     if (payload===undefined) payload=OmegaNum.ONE;
     var t=this.clone();
@@ -771,6 +807,7 @@
     return new OmegaNum(x).tetr(y,payload);
   };
   //Implementation of functions from break_eternity.js
+  /** @returns {typeof P} */
   P.iteratedexp=function (other,payload){
     return this.tetr(other,payload);
   };
@@ -778,6 +815,7 @@
     return new OmegaNum(x).iteratedexp(y,payload);
   };
   //This implementation is highly inaccurate and slow, and probably be given custom code
+  /** @returns {typeof P} */
   P.iteratedlog=function (base,other){
     if (base===undefined) base=10;
     if (other===undefined) other=OmegaNum.ONE.clone();
@@ -791,6 +829,7 @@
   Q.iteratedlog=function (x,y,z){
     return new OmegaNum(x).iteratedlog(y,z);
   };
+  /** @returns {typeof P} */
   P.layeradd=function (other,base){
     if (base===undefined) base=10;
     if (other===undefined) other=OmegaNum.ONE.clone();
@@ -802,6 +841,7 @@
   Q.layeradd=function (x,y,z){
     return new OmegaNum(x).layeradd(y,z);
   };
+  /** @returns {typeof P} */
   P.layeradd10=function (other){
     return this.layeradd(other);
   };
@@ -813,6 +853,7 @@
   //The super square-root function - what number, tetrated to height 2, equals this?
   //Other sroots are possible to calculate probably through guess and check methods, this one is easy though.
   //https://en.wikipedia.org/wiki/Tetration#Super-root
+  /** @returns {typeof P} */
   P.ssqrt=P.ssrt=function (){
     var x=this.clone();
     if (x.lt(Math.exp(-1/Math.E))) return OmegaNum.NaN.clone();
@@ -831,6 +872,7 @@
   //Uses linear approximation
   //For more information, please see the break_eternity.js source:
   //https://github.com/Patashu/break_eternity.js/blob/96901974c175cb28f66c7164a5a205cdda783872/src/index.ts#L3901
+  /** @returns {typeof P} */
   P.linear_sroot=function (degree){
     var x=new OmegaNum(this);
     degree=new OmegaNum(degree);
@@ -1020,6 +1062,7 @@
   //Super-logarithm, one of tetration's inverses, tells you what size power tower you'd have to tetrate base to to get number. By definition, will never be higher than 1.8e308 in break_eternity.js, since a power tower 1.8e308 numbers tall is the largest representable number.
   //Uses linear approximation
   //https://en.wikipedia.org/wiki/Super-logarithm
+  /** @returns {typeof P} */
   P.slog=function (base){
     if (base===undefined) base=10;
     var x=new OmegaNum(this);
@@ -1079,6 +1122,7 @@
     return OmegaNum.arrow(x,3,y);
   };
   //Uses linear approximations for real height
+  /** @returns {() => typeof P} */
   P.arrow=function (arrows){
     var t=this.clone();
     arrows=new OmegaNum(arrows);
@@ -1131,6 +1175,7 @@
       return r;
     };
   };
+  /** @returns {typeof P} */
   P.chain=function (other,arrows){
     return this.arrow(arrows)(other);
   };
@@ -1209,10 +1254,12 @@
     */
     return new OmegaNum(n).factorial().div(new OmegaNum(k).factorial().mul(new OmegaNum(n).sub(new OmegaNum(k)).factorial()));
   };
+  /** @returns {typeof P} */
   P.choose = function (other) {
     return OmegaNum.choose(this, other);
   };
   //end break_eternity.js excerpt
+  /** @returns {typeof P} */
   P.normalize=function (){
     var b;
     var x=this;
@@ -1275,10 +1322,12 @@
     return x;
   };
   var standardizeMessageSent=false;
+  /** @returns {typeof P} */
   P.standardize=function (){
     if (!standardizeMessageSent) console.warn(omegaNumError+"'standardize' method is being deprecated in favor of 'normalize' and will be removed in the future!"),standardizeMessageSent=true;
     return this.normalize();
   }
+  /** @returns {number} */
   P.toNumber=function (){
     //console.log(this.array);
     if (this.sign==-1) return -1*this.abs();
@@ -1286,6 +1335,7 @@
     if (this.array[1]==1) return Math.pow(10,this.array[0]);
     return this.array[0];
   };
+  /** @returns {string} */
   P.toString=function (){
     if (this.sign==-1) return "-"+this.abs();
     if (isNaN(this.array[0])) return "NaN";
@@ -1312,6 +1362,7 @@
     var rounded=Math.round(value*Math.pow(10,len-numDigits))*Math.pow(10,numDigits-len);
     return parseFloat(rounded.toFixed(Math.max(len-numDigits,0)));
   };
+  /** @returns {string} */
   P.toStringWithDecimalPlaces=function (places,applyToOpNums){
     if (this.sign==-1) return "-"+this.abs();
     if (isNaN(this.array[0])) return "NaN";
@@ -1350,24 +1401,29 @@
     return s;
   };
   //these are from break_eternity.js as well
+  /** @returns {string} */
   P.toExponential=function (places,applyToOpNums){
     if (this.array.length==1) return (this.sign*this.array[0]).toExponential(places);
     return this.toStringWithDecimalPlaces(places,applyToOpNums);
   };
+  /** @returns {string} */
   P.toFixed=function (places,applyToOpNums){
     if (this.array.length==1) return (this.sign*this.array[0]).toFixed(places);
     return this.toStringWithDecimalPlaces(places,applyToOpNums);
   };
+  /** @returns {string} */
   P.toPrecision=function (places,applyToOpNums){
     if (this.array[0]===0) return (this.sign*this.array[0]).toFixed(places-1,applyToOpNums);
     if (this.array.length==1&&this.array[0]<1e-6) return this.toExponential(places-1,applyToOpNums);
     if (this.array.length==1&&places>Math.log10(this.array[0])) return this.toFixed(places-Math.floor(Math.log10(this.array[0]))-1,applyToOpNums);
     return this.toExponential(places-1,applyToOpNums);
   };
+  /** @returns {string} */
   P.valueOf=function (){
     return this.toString();
   };
   //Note: toArray() would be impossible without changing the layout of the array or lose the information about the sign
+  /** @returns {string | Object} */
   P.toJSON=function (){
     if (OmegaNum.serializeMode==OmegaNum.JSON){
       return {
@@ -1378,6 +1434,7 @@
       return this.toString();
     }
   };
+  /** @returns {string} */
   P.toHyperE=function (){
     if (this.sign==-1) return "-"+this.abs().toHyperE();
     if (isNaN(this.array[0])) return "NaN";
@@ -1640,6 +1697,7 @@
     x.normalize();
     return x;
   };
+  /** @returns {typeof P} */
   P.clone=function (){
     var temp=new OmegaNum();
     temp.array=this.array.slice(0);
@@ -1790,9 +1848,6 @@
   OmegaNum=defineConstants(OmegaNum);
 
   OmegaNum['default']=OmegaNum.OmegaNum=OmegaNum;
-
-  /** @type {P & Q & R} */
-  let result = OmegaNum
 
   // Export.
 
