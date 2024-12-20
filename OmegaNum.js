@@ -1791,6 +1791,9 @@
 
   OmegaNum['default']=OmegaNum.OmegaNum=OmegaNum;
 
+  /** @type {P & Q & R} */
+  let result = OmegaNum
+
   // Export.
 
   // AMD.
